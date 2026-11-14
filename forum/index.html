@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forum · Been There · Quest Laguna</title>
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+
+<header class="header"><div class="header-in">
+  <a class="logo" href="/forum/"><div class="logo-mark">»</div>beenthere<span class="church">QUEST LAGUNA</span></a>
+</div></header>
+
+<div class="wrap">
+  <div class="help-bar">🧡 <span>Going through something heavy? Call or text <b>988</b> anytime. In the Philippines, call <b>1553</b> (NCMH).</span></div>
+
+  <div class="card ask">
+    <h1>What's on your heart?</h1>
+    <p class="sub">No name. No account. No one will know it's you.</p>
+    <textarea class="field" id="askText" placeholder="Type your question here…"></textarea>
+    <div class="blocked" id="askBlocked">🚫 <b>This can't be posted yet.</b> Please remove inappropriate language. You can still say exactly how you feel, just in different words.</div>
+    <div class="posted" id="askPosted">✓ Posted anonymously. Mentors who've been there will be notified.</div>
+    <div class="ask-foot">
+      <span class="who">🕊 You'll appear as <b>Quiet Sparrow</b></span>
+      <button class="btn btn-red" id="askBtn">Post my question</button>
+    </div>
+    <div class="checks"><span>✅ Language check</span><span>✅ Safety check</span><span>🔒 Identity hidden</span></div>
+  </div>
+
+  <div class="filter-label">Show</div>
+  <div class="seg" id="kindFilter">
+    <button class="active" data-kind="all">All</button>
+    <button data-kind="sensitive">⚠️ Sensitive</button>
+    <button data-kind="wholesome">🌤 Wholesome</button>
+  </div>
+
+  <div class="filter-label">Topic</div>
+  <div class="chips" id="topicFilter">
+    <button class="chip active" data-topic="all">All topics</button>
+    <button class="chip" data-topic="doubt">Doubt</button>
+    <button class="chip" data-topic="prayer">Prayer</button>
+    <button class="chip" data-topic="relationships">Relationships</button>
+    <button class="chip" data-topic="mental">Mental health</button>
+    <button class="chip" data-topic="science">Science &amp; faith</button>
+    <button class="chip" data-topic="suffering">Suffering</button>
+    <button class="chip" data-topic="hurt">Church hurt</button>
+  </div>
+
+  <div id="feed">
+    <a class="card post" href="/forum/post/" data-kind="normal" data-topic="doubt">
+      <div class="meta"><span class="alias">🕊 Restless Wren</span>· 16–18 · 2h <span class="tag">Doubt</span></div>
+      <h3>Is it a sin that I don't feel God anymore?</h3>
+      <p>I used to cry during worship. Now I feel nothing. I'm scared that I'm faking it…</p>
+      <div class="stats"><span class="s-m">🤝 42 wondered this too</span><span class="s-v">✓ 3 verified answers</span><span class="s-a">💬 12 anonymous</span><span class="s-n">📌 Has a context note</span></div>
+    </a>
+
+    <a class="card post" href="/forum/post/" data-kind="sensitive" data-topic="mental">
+      <div class="meta"><span class="alias">🕊 Hidden Lark</span>· 16–18 · 3h <span class="tag tag-s">Sensitive</span><span class="tag">Mental health</span></div>
+      <h3>Sometimes I think everyone would be better off without me</h3>
+      <p>I've been feeling this way for weeks and I don't know who to tell…</p>
+      <div class="stats"><span class="s-m">🤝 18 wondered this too</span><span class="s-v">✓ 2 verified answers</span><span class="s-a">💬 7 anonymous</span></div>
+      <div class="veil">
+        <b>⚠️ Sensitive topic: self-harm</b>
+        <span>A trained mentor has already reached out with care. If this is how you feel too, call 988 or 1553.</span>
+        <button class="btn" onclick="event.preventDefault();event.stopPropagation();this.parentElement.remove()">Show post</button>
+      </div>
+    </a>
+
+    <a class="card post" href="/forum/post/" data-kind="wholesome" data-topic="prayer">
+      <div class="meta"><span class="alias">🕊 Sunny Maple</span>· 19–22 · 4h <span class="tag tag-w">🌤 Wholesome</span><span class="tag">Prayer</span></div>
+      <h3>Update: my dad came to church with me for the first time!</h3>
+      <p>I asked here 3 months ago how to pray for him. Thank you to everyone who prayed. He sat beside me today. 😭</p>
+      <div class="stats"><span class="s-m">🤝 88 celebrated this</span><span class="s-v">✓ 4 verified answers</span><span class="s-a">💬 31 anonymous</span></div>
+    </a>
+
+    <a class="card post" href="/forum/post/" data-kind="normal" data-topic="suffering">
+      <div class="meta"><span class="alias">🕊 Gentle Fern</span>· 13–15 · 5h <span class="tag">Suffering</span></div>
+      <h3>If God is good, why did my best friend die?</h3>
+      <p>Everyone keeps saying "God has a plan" and honestly it makes me angry.</p>
+      <div class="stats"><span class="s-m">🤝 67 wondered this too</span><span class="s-v">✓ 5 verified answers</span><span class="s-a">💬 21 anonymous</span></div>
+    </a>
+
+    <a class="card post" href="/forum/post/" data-kind="normal" data-topic="science">
+      <div class="meta"><span class="alias">🕊 Bright Cedar</span>· 19–22 · 1d <span class="tag">Science &amp; faith</span></div>
+      <h3>My professor says evolution disproves Genesis. Do I have to choose?</h3>
+      <p>I don't want to lose my faith in college but I don't want to ignore evidence either.</p>
+      <div class="stats"><span class="s-m">🤝 28 wondered this too</span><span class="s-v">✓ 4 verified answers</span><span class="s-a">💬 9 anonymous</span><span class="s-n">📌 Has a context note</span></div>
+    </a>
+
+    <a class="card post" href="/forum/post/" data-kind="wholesome" data-topic="relationships">
+      <div class="meta"><span class="alias">🕊 Kind Ember</span>· 16–18 · 1d <span class="tag tag-w">🌤 Wholesome</span><span class="tag">Relationships</span></div>
+      <h3>I finally forgave my sister. Here's what helped me.</h3>
+      <p>A mentor here told me forgiveness is a decision before it's a feeling. That changed everything.</p>
+      <div class="stats"><span class="s-m">🤝 54 celebrated this</span><span class="s-v">✓ 2 verified answers</span><span class="s-a">💬 15 anonymous</span></div>
+    </a>
+
+    <a class="card post" href="/forum/post/" data-kind="normal" data-topic="hurt">
+      <div class="meta"><span class="alias">🕊 Still Harbor</span>· 16–18 · 2d <span class="tag">Church hurt</span></div>
+      <h3>A leader said something that really hurt me. How do I go back?</h3>
+      <p>I haven't told anyone. I dread walking in every week.</p>
+      <div class="stats"><span class="s-m">🤝 19 wondered this too</span><span class="s-v">✓ 2 verified answers</span><span class="s-a">💬 6 anonymous</span></div>
+    </a>
+
+    <div class="empty" id="empty">No posts match these filters yet.</div>
+  </div>
+
+  <p class="small" style="text-align:center;margin-top:30px">Are you a pastor or church leader? <a href="/mentors/" style="color:var(--red);font-weight:800">Become a mentor →</a></p>
+</div>
+
+<script src="/assets/moderation.js"></script>
+<script>
+  // two-level filter: kind (All / Sensitive / Wholesome) + topic
+  let kind = 'all', topic = 'all';
+  const applyFilters = () => {
+    let shown = 0;
+    document.querySelectorAll('#feed .post').forEach(p => {
+      const ok = (kind === 'all' || p.dataset.kind === kind) && (topic === 'all' || p.dataset.topic === topic);
+      p.style.display = ok ? '' : 'none'; if (ok) shown++;
+    });
+    document.getElementById('empty').style.display = shown ? 'none' : 'block';
+  };
+  document.querySelectorAll('#kindFilter button').forEach(b => b.onclick = () => {
+    document.querySelectorAll('#kindFilter button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active'); kind = b.dataset.kind; applyFilters();
+  });
+  document.querySelectorAll('#topicFilter .chip').forEach(c => c.onclick = () => {
+    document.querySelectorAll('#topicFilter .chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active'); topic = c.dataset.topic; applyFilters();
+  });
+
+  // posting a clean question adds it to the top of the feed
+  guardInput('askText', 'askBtn', 'askBlocked', area => {
+    const el = document.createElement('div');
+    el.className = 'card post'; el.dataset.kind = 'normal'; el.dataset.topic = 'all';
+    el.innerHTML = '<div class="meta"><span class="alias">🕊 Quiet Sparrow (you)</span>· just now <span class="tag">Waiting for mentors</span></div><h3></h3>' +
+      '<div class="stats"><span class="s-m">🤝 0 wondered this too</span><span class="s-v">✓ 0 verified answers</span><span class="s-a">💬 0 anonymous</span></div>';
+    el.querySelector('h3').textContent = area.value.trim();
+    document.getElementById('feed').prepend(el);
+    area.value = '';
+    document.getElementById('askPosted').classList.add('show');
+    setTimeout(() => document.getElementById('askPosted').classList.remove('show'), 4000);
+  });
+</script>
+</body>
+</html>

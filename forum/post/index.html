@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Is it a sin that I don't feel God anymore? · Been There</title>
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+
+<header class="header"><div class="header-in">
+  <a class="logo" href="/forum/"><div class="logo-mark">»</div>beenthere<span class="church">QUEST LAGUNA</span></a>
+</div></header>
+
+<div class="wrap">
+  <a class="back" href="/forum/">← Back to forum</a>
+
+  <div class="card q">
+    <div class="meta"><span class="alias">🕊 Restless Wren</span>· 16–18 · 2h <span class="tag">Doubt</span></div>
+    <h1>Is it a sin that I don't feel God anymore?</h1>
+    <p>I used to cry during worship. Now I feel nothing. I still go every Sunday because my parents make me, but I'm scared that I'm faking it, and that God is disappointed in me.</p>
+    <div class="stats"><span class="s-m">🤝 <span class="wc">42</span> wondered this too</span><span class="s-v">✓ 3 verified answers</span><span class="s-a">💬 12 anonymous</span></div>
+    <div class="q-actions">
+      <button class="btn wonder" id="wonderBtn">🤝 I've wondered this too</button>
+      <button class="btn btn-line">⚑ Report</button>
+    </div>
+  </div>
+
+  <div class="section"><h2>✓ Verified answers</h2></div>
+  <p class="section-sub">From pastors and leaders who went through the same thing</p>
+
+  <div class="agree"><b>In short:</b> Feeling far from God is common and is not a sin. Faith is bigger than feelings.</div>
+
+  <div class="card answer">
+    <div class="mentor">
+      <div class="av" style="background:#A30D24">DM</div>
+      <div><div class="m-name">Pastor Daniel M. <span class="check">✓</span></div><div class="m-role">Youth Pastor · Quest Laguna</div></div>
+    </div>
+    <div class="been">🌱 Been there: felt spiritually numb at 18</div>
+    <p>At 18 I felt exactly this. I'd stand in worship and feel like a fraud. What I learned: faith isn't measured by how much we feel. The fact that you care about this says something real is still there.</p>
+    <div class="verse">"Why, my soul, are you downcast? … Put your hope in God, for I will yet praise him."<b>Psalm 42:5</b></div>
+    <div class="foot"><span>💛 31 found this helpful</span></div>
+  </div>
+
+  <div class="card answer">
+    <div class="mentor">
+      <div class="av" style="background:#5A0A0F">RL</div>
+      <div><div class="m-name">Rachel L. <span class="check">✓</span></div><div class="m-role">Campus Ministry Leader · Cru</div></div>
+    </div>
+    <div class="been">🌱 Been there: a "silent" year in college</div>
+    <p>I stopped trying to <i>feel</i> and started simply telling God the truth, even "I don't feel you right now." That honesty became the start of my way back.</p>
+    <div class="foot"><span>💛 24 found this helpful</span></div>
+  </div>
+
+  <div class="section"><h2>💬 Anonymous comments</h2></div>
+  <p class="section-sub">From people like you</p>
+
+  <div id="comments">
+    <div class="card comment">
+      <div class="meta"><span class="alias">🕊 Quiet Willow</span>· 16–18 · 1h</div>
+      <p>Same. I thought I was the only one in my youth group. This made me feel less alone.</p>
+      <div class="foot"><button>💛 Helpful</button><button class="fc">📌 Request a fact check</button></div>
+    </div>
+
+    <div class="card comment">
+      <div class="meta"><span class="alias">🕊 Grey Stone</span>· 19–22 · 55m</div>
+      <p>My old church said if you don't feel God, it means you were never really saved in the first place.</p>
+      <div class="cnote">
+        <div class="cnote-h">📌 Context added by verified mentors</div>
+        <p>Many believers in the Bible felt far from God, including David and Elijah, and were never told it meant they weren't saved. Most churches teach that salvation rests on God's grace, not on our feelings.</p>
+        <div class="src">
+          <a href="#">📖 Psalm 13:1–6 · Psalm 22:1 <span>Scripture</span></a>
+          <a href="#">📖 Ephesians 2:8–9 <span>Scripture</span></a>
+          <a href="#">🔗 Bible Project: "Lament" <span>Online source</span></a>
+        </div>
+        <div class="cnote-f"><span>Rated helpful by <b>5 mentors from 3 ministries</b></span></div>
+      </div>
+      <div class="foot"><button>💛 Helpful</button></div>
+    </div>
+
+    <div class="card comment">
+      <div class="meta"><span class="alias">🕊 Amber Pine</span>· 19–22 · 50m</div>
+      <p>I went through this at 16. It came back slowly, not in a big moment. Keep going. ❤️</p>
+      <div class="foot"><button>💛 Helpful</button><button class="fc">📌 Request a fact check</button></div>
+    </div>
+  </div>
+
+  <div class="card reply">
+    <h3>Add an anonymous comment</h3>
+    <textarea class="field" id="replyText" placeholder="Share some encouragement…" style="min-height:80px"></textarea>
+    <div class="blocked" id="replyBlocked">🚫 <b>This can't be posted yet.</b> Please remove inappropriate language.</div>
+    <div class="row">
+      <span class="small">🕊 As Quiet Sparrow · Verified answers come from mentors only</span>
+      <button class="btn btn-red" id="replyBtn">Post comment</button>
+    </div>
+  </div>
+
+  <div class="card talk">
+    <div><h3>Want to talk to someone?</h3><p>Only if you want to. You choose who, and how much you share.</p></div>
+    <button class="btn btn-white">🤝 I'd like to talk</button>
+  </div>
+</div>
+
+<script src="/assets/moderation.js"></script>
+<script>
+  const wb = document.getElementById('wonderBtn');
+  wb.onclick = () => { wb.classList.toggle('on'); document.querySelector('.wc').textContent = wb.classList.contains('on') ? 43 : 42; };
+
+  document.querySelectorAll('.fc').forEach(b => b.onclick = () => { b.textContent = '📌 Sent to mentors for review'; b.disabled = true; });
+
+  guardInput('replyText', 'replyBtn', 'replyBlocked', area => {
+    const el = document.createElement('div');
+    el.className = 'card comment';
+    el.innerHTML = '<div class="meta"><span class="alias">🕊 Quiet Sparrow (you)</span>· just now</div><p></p>';
+    el.querySelector('p').textContent = area.value.trim();
+    document.getElementById('comments').append(el);
+    area.value = '';
+  });
+</script>
+</body>
+</html>

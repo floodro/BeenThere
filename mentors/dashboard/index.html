@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard · Mentor Portal · Been There</title>
+<link rel="stylesheet" href="/assets/app.css">
+<script>
+  // prototype: ?demo=1 signs in a sample mentor (used for presentation screenshots)
+  if (new URLSearchParams(location.search).has('demo'))
+    localStorage.setItem('bt_mentor', JSON.stringify({ name:'Pastor Daniel M.', church:'Quest Laguna', role:'Youth Pastor',
+      stories:['Feeling far from God','Grief / loss','Anxiety','Doubt'] }));
+  // route guard: mentors only
+  const mentor = JSON.parse(localStorage.getItem('bt_mentor') || 'null');
+  if (!mentor) location.replace('/mentors/');
+</script>
+</head>
+<body>
+
+<header class="header"><div class="header-in wide">
+  <a class="logo" href="/mentors/dashboard/"><div class="logo-mark">»</div>beenthere<span class="church">MENTOR PORTAL</span></a>
+  <div class="user">
+    <span class="badge-v">✓ Verified mentor</span>
+    <div class="av" style="background:#A30D24" id="uInitials"></div>
+    <button class="logout" id="logout">Log out</button>
+  </div>
+</div></header>
+
+<div class="m-wrap">
+  <div class="m-hello">
+    <div>
+      <h1 id="hello"></h1>
+      <p id="storiesLine"></p>
+    </div>
+    <span class="small" id="roleLine"></span>
+  </div>
+
+  <div class="m-tabs">
+    <button class="m-tab urgent" data-pane="care"><span class="n">1</span><span class="l">⚠️ Needs care now</span></button>
+    <button class="m-tab active" data-pane="matched"><span class="n" id="matchedCount">0</span><span class="l">📥 Matched to you</span></button>
+    <button class="m-tab" data-pane="notes"><span class="n">2</span><span class="l">📌 Fact checks</span></button>
+    <button class="m-tab" data-pane="blocked"><span class="n">3</span><span class="l">🚫 Blocked posts</span></button>
+  </div>
+
+  <!-- needs care -->
+  <div class="m-pane" id="pane-care">
+    <p class="section-sub">Flagged for possible self-harm or abuse. These skip normal matching and go to every trained mentor.</p>
+    <div class="card m-item" style="border-left:5px solid var(--warn)">
+      <div>
+        <span class="flag">⚠️ Possible self-harm</span>
+        <h3>Sometimes I think everyone would be better off without me</h3>
+        <div class="small">Crisis resources (988 / 1553) were shown to the person automatically · 3h ago</div>
+      </div>
+      <button class="btn btn-red">Respond with care</button>
+    </div>
+  </div>
+
+  <!-- matched -->
+  <div class="m-pane active" id="pane-matched">
+    <p class="section-sub">Questions routed to you because of what you've been through. Answers are public. No private messages.</p>
+    <div id="matchedList"></div>
+  </div>
+
+  <!-- fact checks -->
+  <div class="m-pane" id="pane-notes">
+    <p class="section-sub">A note goes public only when mentors <b>from different ministries</b> agree it's helpful.</p>
+    <div class="card" style="padding:20px;margin-bottom:14px">
+      <div class="small">Flagged comment · requested by 6 readers</div>
+      <p style="margin:8px 0 4px;font-style:italic">"The Bible says Christians shouldn't take medicine for depression, just pray more."</p>
+      <div class="cnote">
+        <div class="cnote-h">📌 Proposed context note</div>
+        <p>The Bible doesn't forbid medicine. Luke was a physician, and Paul advised Timothy to take wine for his stomach. Prayer and medical care can go together. Talk to a doctor before changing any medication.</p>
+        <div class="src">
+          <a href="#">📖 Colossians 4:14 · 1 Timothy 5:23 <span>Scripture</span></a>
+          <a href="#">🔗 WHO: Depression fact sheet <span>Online source</span></a>
+        </div>
+        <div class="bridge"><span>✓ Quest Laguna</span><span>✓ Cru</span><span class="wait">Waiting for 1 more ministry</span></div>
+        <div class="cnote-f"><span>Is this note helpful and accurate?</span><div class="rate"><button>Yes</button><button>Somewhat</button><button>No</button></div></div>
+      </div>
+    </div>
+    <div class="card m-item">
+      <div><div class="small">Flagged comment · 3 requests</div><h3>"Dinosaurs were made up to test our faith."</h3></div>
+      <button class="btn btn-line">Write a note</button>
+    </div>
+  </div>
+
+  <!-- blocked -->
+  <div class="m-pane" id="pane-blocked">
+    <p class="section-sub">Stopped automatically for profanity. They never appeared publicly, and the writer was asked to rephrase.</p>
+    <div class="card blocked-row"><div><span class="tag tag-s">Profanity</span><p style="margin-top:6px">"Why does church feel so <span class="blur-word">xxxxx</span> fake?"</p><div class="small">Rephrased and reposted ✓</div></div></div>
+    <div class="card blocked-row"><div><span class="tag tag-s">Profanity</span><p style="margin-top:6px">"My <span class="blur-word">xxxxxx</span> friends keep laughing at me for praying"</p><div class="small">Not reposted</div></div><button class="btn btn-line">Review</button></div>
+    <div class="card blocked-row"><div><span class="tag tag-s">Profanity · Tagalog</span><p style="margin-top:6px">"<span class="blur-word">xxxxxxx</span>, bakit ang hirap magdasal"</p><div class="small">Rephrased and reposted ✓</div></div></div>
+  </div>
+</div>
+
+<script>
+  // personalize
+  const initials = mentor.name.replace(/^(Pastor|Ptr\.|Fr\.)\s+/i,'').split(/\s+/).map(w => w[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('uInitials').textContent = initials;
+  const hour = new Date().getHours();
+  document.getElementById('hello').textContent = `Good ${hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening'}, ${mentor.name.split(' ').slice(0,2).join(' ')}`;
+  document.getElementById('storiesLine').textContent = '🌱 Your "Been there" stories: ' + mentor.stories.join(' · ');
+  document.getElementById('roleLine').textContent = `${mentor.role} · ${mentor.church}`;
+  document.getElementById('logout').onclick = () => { localStorage.removeItem('bt_mentor'); location.href = '/mentors/'; };
+
+  // question pool → matched by the mentor's stories
+  const QUESTIONS = [
+    { q:"Is it a sin that I don't feel God anymore?", topic:'Doubt', story:'Feeling far from God', who:'Restless Wren · 16–18', ago:'2h' },
+    { q:"If God is good, why did my best friend die?", topic:'Suffering', story:'Grief / loss', who:'Gentle Fern · 13–15', ago:'5h' },
+    { q:"Does having anxiety mean I don't trust God enough?", topic:'Mental health', story:'Anxiety', who:'Soft Reed · 16–18', ago:'8h' },
+    { q:"What if I only believe because my parents do?", topic:'Doubt', story:'Doubt', who:'Lone Pine · 19–22', ago:'1d' },
+    { q:"My professor says evolution disproves Genesis. Do I have to choose?", topic:'Science & faith', story:'Science & faith', who:'Bright Cedar · 19–22', ago:'1d' },
+    { q:"My parents fight every night. Is it my fault?", topic:'Family', story:'Family problems', who:'Small Robin · 13–15', ago:'1d' },
+    { q:"A leader said something that really hurt me. How do I go back?", topic:'Church hurt', story:'Church hurt', who:'Still Harbor · 16–18', ago:'2d' },
+    { q:"I can't stop watching things I know are wrong. Is there hope?", topic:'Struggles', story:'Addiction', who:'Tired Oak · 16–18', ago:'2d' },
+    { q:"Is it okay to date someone who isn't a Christian?", topic:'Relationships', story:'Relationships', who:'Kind Ember · 16–18', ago:'3d' },
+    { q:"I feel empty all the time, even at church.", topic:'Mental health', story:'Depression', who:'Grey Dove · 19–22', ago:'3d' }
+  ];
+  const mine = QUESTIONS.filter(x => mentor.stories.includes(x.story));
+  const list = document.getElementById('matchedList');
+  document.getElementById('matchedCount').textContent = mine.length;
+  if (!mine.length) list.innerHTML = '<div class="card" style="padding:24px;text-align:center" class="small">No matched questions right now. We\'ll notify you when one comes in.</div>';
+
+  mine.forEach((x, i) => {
+    const card = document.createElement('div');
+    card.className = 'card m-item';
+    card.innerHTML = `
+      <div style="flex:1;min-width:260px">
+        <div class="meta"><span class="alias">🕊 ${x.who}</span>· ${x.ago} <span class="tag">${x.topic}</span></div>
+        <h3></h3>
+        <div class="match">✓ Matched because you've been through: ${x.story}</div>
+        <div class="editor" style="display:none">
+          <textarea class="field" style="min-height:110px;margin-top:12px" placeholder="Share what you felt back then, and what helped."></textarea>
+          <div class="tools"><button class="tool">📖 Add Bible verse</button><button class="tool">🔗 Add link</button></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px;flex-wrap:wrap">
+            <span class="small">Your answer will show your name, church and 🌱 ${x.story}</span>
+            <button class="btn btn-red post-ans">✓ Post verified answer</button>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-line open">Answer</button>`;
+    card.querySelector('h3').textContent = x.q;
+    const ed = card.querySelector('.editor'), open = card.querySelector('.open');
+    open.onclick = () => { const on = ed.style.display === 'none'; ed.style.display = on ? 'block' : 'none'; open.textContent = on ? 'Close' : 'Answer'; card.classList.toggle('open-ans', on); };
+    card.querySelector('.post-ans').onclick = () => {
+      if (!card.querySelector('textarea').value.trim()) return;
+      card.innerHTML = '<div><div class="match">✓ Answer posted</div><h3></h3><div class="small">The asker will see it with your 🌱 Been there badge.</div></div>';
+      card.querySelector('h3').textContent = x.q;
+      card.classList.remove('open-ans');
+    };
+    list.append(card);
+  });
+
+  // tabs + note rating
+  document.querySelectorAll('.m-tab').forEach(t => t.onclick = () => {
+    document.querySelectorAll('.m-tab').forEach(x => x.classList.toggle('active', x === t));
+    document.querySelectorAll('.m-pane').forEach(p => p.classList.toggle('active', p.id === 'pane-' + t.dataset.pane));
+  });
+  document.querySelectorAll('.rate').forEach(r => r.querySelectorAll('button').forEach(b => b.onclick = () => {
+    r.querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on');
+  }));
+</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor Portal · Been There · Quest Laguna</title>
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+
+<div class="auth">
+  <!-- left: brand panel -->
+  <aside class="auth-side">
+    <a class="logo" href="/mentors/"><div class="logo-mark">»</div>beenthere<span class="church">MENTOR PORTAL</span></a>
+    <div>
+      <h1>Your story could be someone's answer.</h1>
+      <p>Young people in our church have questions they're afraid to ask out loud. Walk with them as someone who's been there.</p>
+    </div>
+    <div class="chev">›››</div>
+  </aside>
+
+  <!-- right: forms -->
+  <main class="auth-main">
+    <div class="auth-box">
+      <div class="auth-tabs" id="authTabs">
+        <button class="active" data-form="login">Log in</button>
+        <button data-form="signup">Sign up</button>
+      </div>
+
+      <!-- LOG IN -->
+      <form class="form active" id="form-login" novalidate>
+        <h2>Welcome back</h2>
+        <p class="lead">Log in to see questions matched to you.</p>
+        <div class="err" id="loginErr"></div>
+        <div class="fld"><label for="lEmail">Email</label><input id="lEmail" type="email" placeholder="you@church.org" autocomplete="username"></div>
+        <div class="fld"><label for="lPass">Password</label><input id="lPass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+        <button class="btn btn-red full" type="submit">Log in</button>
+        <p class="small" style="margin-top:12px;text-align:center"><a href="#">Forgot password?</a></p>
+        <div class="divider">Prototype: any email and a password of 6+ characters works.</div>
+        <p class="small" style="text-align:center">New here? <a href="#" data-switch="signup" style="color:var(--red);font-weight:800">Apply to be a mentor</a></p>
+      </form>
+
+      <!-- SIGN UP -->
+      <form class="form" id="form-signup" novalidate>
+        <div id="signupFields">
+          <h2>Become a mentor</h2>
+          <p class="lead">Every mentor is verified by their church before they can answer.</p>
+          <div class="err" id="signupErr"></div>
+
+          <div class="fld"><label for="sName">Full name</label><input id="sName" placeholder="e.g. Daniel Mendoza"></div>
+          <div class="fld"><label for="sEmail">Email</label><input id="sEmail" type="email" placeholder="you@church.org" autocomplete="username"></div>
+          <div class="fld"><label for="sPass">Password</label><input id="sPass" type="password" placeholder="At least 6 characters" autocomplete="new-password"></div>
+
+          <div class="row2">
+            <div class="fld"><label for="sChurch">Church / ministry</label>
+              <select id="sChurch"><option value="">Choose…</option><option>Quest Laguna</option><option>Cru</option><option>Victory</option><option>CCF</option><option>Other</option></select>
+            </div>
+            <div class="fld"><label for="sRole">Your role</label>
+              <select id="sRole"><option value="">Choose…</option><option>Pastor</option><option>Youth Leader</option><option>Small Group Leader</option><option>Counselor</option><option>Disciple / Volunteer</option></select>
+            </div>
+          </div>
+
+          <div class="fld">
+            <label>🌱 What have you been through?</label>
+            <div class="pick" id="stories">
+              <button type="button" class="chip">Doubt</button>
+              <button type="button" class="chip">Feeling far from God</button>
+              <button type="button" class="chip">Grief / loss</button>
+              <button type="button" class="chip">Anxiety</button>
+              <button type="button" class="chip">Depression</button>
+              <button type="button" class="chip">Family problems</button>
+              <button type="button" class="chip">Relationships</button>
+              <button type="button" class="chip">Church hurt</button>
+              <button type="button" class="chip">Science &amp; faith</button>
+              <button type="button" class="chip">Addiction</button>
+            </div>
+            <div class="hint">Pick at least one. Questions are matched to these. Only the topic is shown, never details.</div>
+          </div>
+
+          <div class="fld"><label for="sEndorser">Who at your church can vouch for you?</label><input id="sEndorser" placeholder="e.g. Ptr. Mark, Senior Pastor"><div class="hint">We'll ask them to confirm you.</div></div>
+
+          <label class="agreebox"><input type="checkbox" id="sConduct"><span>I agree to the <b>Mentor Code of Conduct</b>: answers stay public, no private messages with young people, and I'll report safety concerns.</span></label>
+          <label class="agreebox"><input type="checkbox" id="sCheck"><span>I consent to a <b>background check</b> and a short safeguarding training.</span></label>
+
+          <button class="btn btn-red full" type="submit" style="margin-top:8px">Submit application</button>
+          <p class="small" style="margin-top:14px;text-align:center">Already a mentor? <a href="#" data-switch="login" style="color:var(--red);font-weight:800">Log in</a></p>
+        </div>
+
+        <!-- after submit -->
+        <div class="steps-done" id="pending">
+          <div class="big">🙏</div>
+          <h2>Application received</h2>
+          <p class="lead">Thank you for stepping up. Here's what happens next:</p>
+          <div class="timeline">
+            <div><span class="dot done">✓</span>Application submitted</div>
+            <div><span class="dot now">2</span><span>Church endorsement from <b id="pEndorser"></b></span></div>
+            <div><span class="dot next">3</span>Background check</div>
+            <div><span class="dot next">4</span>15-minute safeguarding training</div>
+            <div><span class="dot next">5</span>Start answering questions ✓</div>
+          </div>
+          <button class="btn btn-red full" type="button" id="demoApprove">Prototype: approve me and open dashboard</button>
+        </div>
+      </form>
+
+      <a class="back-forum" href="/forum/">← Back to the forum</a>
+    </div>
+  </main>
+</div>
+
+<script>
+  // already logged in → go straight to dashboard
+  if (localStorage.getItem('bt_mentor')) location.replace('/mentors/dashboard/');
+
+  const showForm = name => {
+    document.querySelectorAll('#authTabs button').forEach(b => b.classList.toggle('active', b.dataset.form === name));
+    document.querySelectorAll('.form').forEach(f => f.classList.toggle('active', f.id === 'form-' + name));
+  };
+  document.querySelectorAll('#authTabs button').forEach(b => b.onclick = () => showForm(b.dataset.form));
+  document.querySelectorAll('[data-switch]').forEach(a => a.onclick = e => { e.preventDefault(); showForm(a.dataset.switch); });
+  if (location.hash === '#signup') showForm('signup');
+
+  const fail = (id, msg) => { const e = document.getElementById(id); e.textContent = msg; e.classList.add('show'); };
+  const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  const save = mentor => { localStorage.setItem('bt_mentor', JSON.stringify(mentor)); location.href = '/mentors/dashboard/'; };
+
+  // LOG IN (prototype: no real backend)
+  document.getElementById('form-login').onsubmit = e => {
+    e.preventDefault();
+    const email = document.getElementById('lEmail').value.trim(), pass = document.getElementById('lPass').value;
+    if (!emailOk(email)) return fail('loginErr', 'Please enter a valid email.');
+    if (pass.length < 6) return fail('loginErr', 'Password must be at least 6 characters.');
+    save({ name: 'Pastor Daniel M.', church: 'Quest Laguna', role: 'Youth Pastor',
+           stories: ['Feeling far from God', 'Grief / loss', 'Anxiety'] });
+  };
+
+  // SIGN UP
+  document.querySelectorAll('#stories .chip').forEach(c => c.onclick = () => c.classList.toggle('active'));
+  let applicant = null;
+  document.getElementById('form-signup').onsubmit = e => {
+    e.preventDefault();
+    const v = id => document.getElementById(id).value.trim();
+    const stories = [...document.querySelectorAll('#stories .chip.active')].map(c => c.textContent);
+    if (!v('sName')) return fail('signupErr', 'Please enter your full name.');
+    if (!emailOk(v('sEmail'))) return fail('signupErr', 'Please enter a valid email.');
+    if (document.getElementById('sPass').value.length < 6) return fail('signupErr', 'Password must be at least 6 characters.');
+    if (!v('sChurch') || !v('sRole')) return fail('signupErr', 'Please choose your church and role.');
+    if (!stories.length) return fail('signupErr', 'Pick at least one thing you\'ve been through.');
+    if (!v('sEndorser')) return fail('signupErr', 'Please tell us who can vouch for you.');
+    if (!document.getElementById('sConduct').checked || !document.getElementById('sCheck').checked)
+      return fail('signupErr', 'Please agree to the Code of Conduct and background check.');
+    applicant = { name: v('sName'), church: v('sChurch'), role: v('sRole'), stories };
+    document.getElementById('pEndorser').textContent = v('sEndorser');
+    document.getElementById('signupFields').style.display = 'none';
+    document.getElementById('pending').classList.add('show');
+    document.getElementById('authTabs').style.display = 'none';
+  };
+  document.getElementById('demoApprove').onclick = () => save(applicant);
+</script>
+</body>
+</html>
